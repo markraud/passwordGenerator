@@ -2,9 +2,11 @@ import string
 import random
 import tkinter as tk
 
+# pwdLength = 0
+hasNumber = False
+hasSpecial = False
 
-
-def generatePassword(minLength, numbers=True, specialChars=True):
+def generatePassword(pwdLength, numbers=True, specialChars=True):
     letters = string.ascii_letters
     digits = string.digits
     special = string.punctuation
@@ -21,7 +23,7 @@ def generatePassword(minLength, numbers=True, specialChars=True):
     hasNumber = False
     hasSpecial = False
 
-    while not meetsCriteria or len(pwd) < minLength:
+    while not meetsCriteria or len(pwd) < pwdLength:
         newChar = random.choice(char)
         pwd += newChar
 
@@ -36,6 +38,7 @@ def generatePassword(minLength, numbers=True, specialChars=True):
         if specialChars:
             meetsCriteria = meetsCriteria and hasSpecial
     return pwd
+
 
 # Create the main window
 window = tk.Tk()
@@ -54,13 +57,23 @@ pwdLengthLabel.grid(row = 0,column = 0)
 pwdLengthSpin = tk.Spinbox(pwdGenFrame,bd=2, from_=6, to=40, width=5, font=('Helvetica', 10))
 pwdLengthSpin.grid(row = 0,column = 1)
 
+hasNumberLabel = tk.Label(pwdGenFrame, text="Include Numbers: ", font=('Helvetica', 10), anchor="w")
+hasNumberLabel.grid(row = 1,column = 0)
+hasNumberCheck = tk.Checkbutton(pwdGenFrame, text="", onvalue=True, variable=hasNumber, font=('Helvetica', 10))
+hasNumberCheck.grid(row = 1,column = 1)
+
+hasSpecialLabel = tk.Label(pwdGenFrame, text="Include Special Characters: ", font=('Helvetica', 10), anchor="w")
+hasSpecialLabel.grid(row = 3,column = 0)
+hasSpecialCheck = tk.Checkbutton(pwdGenFrame, text="", onvalue=True, variable=hasNumber, font=('Helvetica', 10))
+hasSpecialCheck.grid(row = 3,column = 1)
+
 for widget in pwdGenFrame.winfo_children():
     widget.grid_configure(padx=10, pady=5, sticky="news")
 
-# minLength = int(input('Enter minimum length: '))
+# pwdLength = int(input('Enter pwd length: '))
 # hasNumber = input('Do you want to have numbers? (y/n): ').lower() == 'y'
 # hasSpecial = input('Do you want to have special characters? (y/n): ').lower() == 'y'
-# pwd = generatePassword(minLength, hasNumber, hasSpecial)
+# pwd = generatePassword(pwdLength, hasNumber, hasSpecial)
 # print('The generated password is: ',pwd)
 
 
