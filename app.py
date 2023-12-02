@@ -3,6 +3,7 @@ import random
 import tkinter as tk
 from tkinter import Button
 
+password = ''
 
 def generatePassword():
     letters = string.ascii_letters
@@ -39,19 +40,14 @@ def generatePassword():
             meetsCriteria = meetsCriteria and hasSpecial
     print(pwd)
     return pwd
+    
 
-# def printStuff():
-#     print('The length of the password is: ', pwdLengthSpin.get())
-#     print('The number box is set to: ', includeNumbers.get())
-#     print('The special box is set to: ', includeSpecialChars.get())   
-          
 # Create the main window
 window = tk.Tk()
 window.title('Password Generator')
-window.geometry('400x400')
+# window.geometry('400x400')
 
 # define variables
-pwdLength = 0
 includeNumbers =  tk.BooleanVar() 
 includeSpecialChars =  tk.BooleanVar()
 
@@ -78,11 +74,13 @@ includeSpecialCheck = tk.Checkbutton(inputFrame, text="", onvalue=True, offvalue
 includeSpecialCheck.grid(row = 3,column = 1)
 
 # create output frame
-buttonFrame = tk.LabelFrame(frame,bd='0')
-buttonFrame.grid(row=2,column=0,padx=10,pady=10)
+outputFrame = tk.LabelFrame(frame,text="",bd=0)
+outputFrame.grid(row = 1,column = 0,sticky="news", padx=20, pady=20)
+outputLabel = tk.Label(outputFrame, text=f'You password is = {password}', font=('Helvetica', 10), padx=20)
+outputLabel.grid(row = 0,column = 0)
 
 # create the button frame
-buttonFrame = tk.LabelFrame(frame,bd='0')
+buttonFrame = tk.LabelFrame(frame,borderwidth = 1, bd='0')
 buttonFrame.grid(row=2,column=0,padx=10,pady=10)
 genPwdButton = Button(buttonFrame,text='Generate Password',bd='4',font=('Helvetica',10), command=generatePassword)
 genPwdButton.grid(row=0,column=0,ipadx=5,ipady=5,padx=10,pady=10)
