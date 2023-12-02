@@ -4,13 +4,14 @@ import tkinter as tk
 from tkinter import Button
 
 
-
-def generatePassword(pwdLength, numbers=True, specialChars=True):
+def generatePassword():
     letters = string.ascii_letters
     digits = string.digits
     special = string.punctuation
-    # print(letters, digits, special)
-    
+    pwdLength = int(pwdLengthSpin.get())
+    numbers = includeNumbers.get()
+    specialChars = includeSpecialChars.get()
+
     char = letters
     if numbers:
         char += digits
@@ -36,12 +37,13 @@ def generatePassword(pwdLength, numbers=True, specialChars=True):
             meetsCriteria = hasNumber
         if specialChars:
             meetsCriteria = meetsCriteria and hasSpecial
+    print(pwd)
     return pwd
 
-def printStuff():
-    print('The has number box is set to: ', hasNumber.get())
-    print('The has special box is set to: ', hasSpecial.get())   
-    print('The length of the password is: ', pwdLengthSpin.get())
+# def printStuff():
+#     print('The length of the password is: ', pwdLengthSpin.get())
+#     print('The number box is set to: ', includeNumbers.get())
+#     print('The special box is set to: ', includeSpecialChars.get())   
           
 # Create the main window
 window = tk.Tk()
@@ -50,8 +52,8 @@ window.geometry('400x400')
 
 # define variables
 pwdLength = 0
-hasNumber =  tk.BooleanVar() 
-hasSpecial =  tk.BooleanVar()
+includeNumbers =  tk.BooleanVar() 
+includeSpecialChars =  tk.BooleanVar()
 
 # Create the first frame inside the main window
 frame = tk.Frame(window)
@@ -65,15 +67,15 @@ pwdLengthLabel.grid(row = 0,column = 0)
 pwdLengthSpin = tk.Spinbox(inputFrame,bd=2, from_=8, to=40, width=5, font=('Helvetica', 10))
 pwdLengthSpin.grid(row = 0,column = 1)
 
-hasNumberLabel = tk.Label(inputFrame, text="Include Numbers: ", font=('Helvetica', 10), anchor="w")
-hasNumberLabel.grid(row = 1,column = 0)
-hasNumberCheck = tk.Checkbutton(inputFrame, text="", onvalue=True, offvalue=False, variable=hasNumber, font=('Helvetica', 10))
-hasNumberCheck.grid(row = 1,column = 1)
+includeNumberLabel = tk.Label(inputFrame, text="Include Numbers: ", font=('Helvetica', 10), anchor="w")
+includeNumberLabel.grid(row = 1,column = 0)
+includeNumberCheck = tk.Checkbutton(inputFrame, text="", onvalue=True, offvalue=False, variable=includeNumbers, font=('Helvetica', 10))
+includeNumberCheck.grid(row = 1,column = 1)
 
-hasSpecialLabel = tk.Label(inputFrame, text="Include Special Characters: ", font=('Helvetica', 10), anchor="w")
-hasSpecialLabel.grid(row = 3,column = 0)
-hasSpecialCheck = tk.Checkbutton(inputFrame, text="", onvalue=True, offvalue=False, variable=hasSpecial, font=('Helvetica', 10))
-hasSpecialCheck.grid(row = 3,column = 1)
+includeSpecialLabel = tk.Label(inputFrame, text="Include Special Characters: ", font=('Helvetica', 10), anchor="w")
+includeSpecialLabel.grid(row = 3,column = 0)
+includeSpecialCheck = tk.Checkbutton(inputFrame, text="", onvalue=True, offvalue=False, variable=includeSpecialChars, font=('Helvetica', 10))
+includeSpecialCheck.grid(row = 3,column = 1)
 
 # create output frame
 buttonFrame = tk.LabelFrame(frame,bd='0')
@@ -82,7 +84,7 @@ buttonFrame.grid(row=2,column=0,padx=10,pady=10)
 # create the button frame
 buttonFrame = tk.LabelFrame(frame,bd='0')
 buttonFrame.grid(row=2,column=0,padx=10,pady=10)
-genPwdButton = Button(buttonFrame,text='Generate Password',bd='4',font=('Helvetica',10),command=printStuff)
+genPwdButton = Button(buttonFrame,text='Generate Password',bd='4',font=('Helvetica',10), command=generatePassword)
 genPwdButton.grid(row=0,column=0,ipadx=5,ipady=5,padx=10,pady=10)
 
 for widget in inputFrame.winfo_children():
