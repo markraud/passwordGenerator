@@ -1,6 +1,7 @@
 import string
 import random
 import tkinter as tk
+from tkinter import Button
 
 
 
@@ -40,6 +41,7 @@ def generatePassword(pwdLength, numbers=True, specialChars=True):
 def printStuff():
     print('The has number box is set to: ', hasNumber.get())
     print('The has special box is set to: ', hasSpecial.get())   
+    print('The length of the password is: ', pwdLengthSpin.get())
           
 # Create the main window
 window = tk.Tk()
@@ -72,6 +74,16 @@ hasSpecialLabel = tk.Label(inputFrame, text="Include Special Characters: ", font
 hasSpecialLabel.grid(row = 3,column = 0)
 hasSpecialCheck = tk.Checkbutton(inputFrame, text="", onvalue=True, offvalue=False, variable=hasSpecial, font=('Helvetica', 10))
 hasSpecialCheck.grid(row = 3,column = 1)
+
+# create output frame
+buttonFrame = tk.LabelFrame(frame,bd='0')
+buttonFrame.grid(row=2,column=0,padx=10,pady=10)
+
+# create the button frame
+buttonFrame = tk.LabelFrame(frame,bd='0')
+buttonFrame.grid(row=2,column=0,padx=10,pady=10)
+genPwdButton = Button(buttonFrame,text='Generate Password',bd='4',font=('Helvetica',10),command=printStuff)
+genPwdButton.grid(row=0,column=0,ipadx=5,ipady=5,padx=10,pady=10)
 
 for widget in inputFrame.winfo_children():
     widget.grid_configure(padx=10, pady=5, sticky="news")
