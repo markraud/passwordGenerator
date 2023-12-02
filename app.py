@@ -46,15 +46,16 @@ window.geometry('400x400')
 frame = tk.Frame(window)
 frame.pack()
 
-pwdGenFrame = tk.LabelFrame(frame,text="Password Generator",bd=4)
+pwdGenFrame = tk.LabelFrame(frame,text="Generate a random password",bd=4)
 pwdGenFrame.grid(row = 0,column = 0,sticky="news", padx=20, pady=20)
 
-pwdGenLabel = tk.Label(pwdGenFrame, text="Password Generator")
-pwdGenLabel.grid(row = 0,column = 0)
+pwdLengthLabel = tk.Label(pwdGenFrame, text="Length of password: ", font=('Helvetica', 10), anchor="w")
+pwdLengthLabel.grid(row = 0,column = 0)
+pwdLengthSpin = tk.Spinbox(pwdGenFrame,bd=2, from_=6, to=40, width=5, font=('Helvetica', 10))
+pwdLengthSpin.grid(row = 0,column = 1)
 
-pwdLengthSpin = tk.Spinbox(pwdGenFrame, from_=6, to=40, width=8, font=('Helvetica', 12))
-pwdLengthSpin.grid(row = 1,column = 0)
-
+for widget in pwdGenFrame.winfo_children():
+    widget.grid_configure(padx=10, pady=5, sticky="news")
 
 # minLength = int(input('Enter minimum length: '))
 # hasNumber = input('Do you want to have numbers? (y/n): ').lower() == 'y'
