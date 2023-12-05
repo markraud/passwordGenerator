@@ -4,7 +4,6 @@ import tkinter as tk
 from tkinter import Button
 import pyperclip as pc
 
-
 def genPass(length, hasNum, hasSpec):
     chars = []
     lettersLower = string.ascii_lowercase
@@ -30,19 +29,17 @@ def genPass(length, hasNum, hasSpec):
         pw.append(random.choice(chars))
     random.shuffle(pw)
     pw = "".join(pw)
+    # create output frame
     outputFrame = tk.LabelFrame(frame,text="",bd=0)
     outputFrame.grid(row = 1,column = 0,sticky="news", padx=20, pady=20)
     outputLabel = tk.Label(outputFrame, text=f'You password is = {pw}', font=('Helvetica', 10), padx=20)
     outputLabel.grid(row = 0,column = 0)
     genPwdButton.grid_remove()
     inputFrame.grid_remove()
-    copyButton = Button(buttonFrame,text='Copy Password',bd='4',font=('Helvetica',10), command=lambda: (copyPass(pw)))
+    copyButton = Button(buttonFrame,text='Copy Password',bd='4',font=('Helvetica',10), command=lambda: (pc.copy(pw)))
     copyButton.grid(row=0,column=0,ipadx=5,ipady=5,padx=10,pady=10)
     closeButton = Button(buttonFrame,text='Close',bd='4',font=('Helvetica',10), command=window.destroy)
     closeButton.grid(row=1,column=0,ipadx=5,ipady=5,padx=10,pady=10)
-
-def copyPass(password):     #copy text to clipboard
-    pc.copy(password)
 
 # Create the main window
 window = tk.Tk()
@@ -74,12 +71,6 @@ includeSpecialLabel = tk.Label(inputFrame, text="Include Special Characters: ", 
 includeSpecialLabel.grid(row = 3,column = 0)
 includeSpecialCheck = tk.Checkbutton(inputFrame, text="", onvalue=True, offvalue=False, variable=includeSpecialChars, font=('Helvetica', 10))
 includeSpecialCheck.grid(row = 3,column = 1)
-
-# create output frame
-# outputFrame = tk.LabelFrame(frame,text="",bd=0)
-# outputFrame.grid(row = 1,column = 0,sticky="news", padx=20, pady=20)
-# outputLabel = tk.Label(outputFrame, text=f'You password is = {pw}', font=('Helvetica', 10), padx=20)
-# outputLabel.grid(row = 0,column = 0)
 
 # create the button frame
 buttonFrame = tk.LabelFrame(frame,borderwidth = 1, bd='0')
