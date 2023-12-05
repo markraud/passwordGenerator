@@ -12,15 +12,19 @@ def genPass(length, hasNum, hasSpec):
     digits = string.digits
     special = "".join(['!', '#', '$', '%', '&', '(', ')', '*', '+'])
     chars = lettersLower + lettersUpper
-    if hasNum == True:
-        chars += digits
-    if hasSpec == True:
-        chars += special
     pw = []
+    if hasNum:
+        chars += digits
+        pw.append(random.choice(digits))
+    else:
+        pw.append(random.choice(chars))
+    if hasSpec:
+        chars += special
+        pw.append(random.choice(special))
+    else:
+        pw.append(random.choice(chars))
     pw.append(random.choice(lettersLower))
     pw.append(random.choice(lettersUpper))
-    pw.append(random.choice(digits))
-    pw.append(random.choice(special))
 
     for i in range(int(length) - 4):
         pw.append(random.choice(chars))
@@ -31,6 +35,7 @@ def genPass(length, hasNum, hasSpec):
     outputLabel = tk.Label(outputFrame, text=f'You password is = {pw}', font=('Helvetica', 10), padx=20)
     outputLabel.grid(row = 0,column = 0)
     genPwdButton.grid_remove()
+    inputFrame.grid_remove()
     copyButton = Button(buttonFrame,text='Copy Password',bd='4',font=('Helvetica',10), command=lambda: (copyPass(pw)))
     copyButton.grid(row=0,column=0,ipadx=5,ipady=5,padx=10,pady=10)
     closeButton = Button(buttonFrame,text='Close',bd='4',font=('Helvetica',10), command=window.destroy)
