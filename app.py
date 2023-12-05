@@ -38,7 +38,7 @@ def genPass(length, hasNum, hasSpec):
     inputFrame.grid_remove()
     copyButton = Button(buttonFrame,text='Copy Password',bd='4',font=('Helvetica',10), command=lambda: (pc.copy(pw)))
     copyButton.grid(row=0,column=0,ipadx=5,ipady=5,padx=10,pady=10)
-    closeButton = Button(buttonFrame,text='Close',bd='4',font=('Helvetica',10), command=window.destroy)
+    closeButton = Button(buttonFrame,text='Close',bd='4',font=('Helvetica',10), command=window.quit)
     closeButton.grid(row=1,column=0,ipadx=5,ipady=5,padx=10,pady=10)
 
 # Create the main window
