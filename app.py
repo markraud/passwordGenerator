@@ -2,45 +2,42 @@ import string
 import random
 import tkinter as tk
 from tkinter import Button
+import pyperclip as pc
 
-password = ''
 
-def generatePassword():
-    letters = string.ascii_letters
+def genPass(length, hasNum, hasSpec):
+    chars = []
+    lettersLower = string.ascii_lowercase
+    lettersUpper = string.ascii_uppercase
     digits = string.digits
-    special = string.punctuation
-    pwdLength = int(pwdLengthSpin.get())
-    numbers = includeNumbers.get()
-    specialChars = includeSpecialChars.get()
+    special = "".join(['!', '#', '$', '%', '&', '(', ')', '*', '+'])
+    chars = lettersLower + lettersUpper
+    if hasNum == True:
+        chars += digits
+    if hasSpec == True:
+        chars += special
+    pw = []
+    pw.append(random.choice(lettersLower))
+    pw.append(random.choice(lettersUpper))
+    pw.append(random.choice(digits))
+    pw.append(random.choice(special))
 
-    char = letters
-    if numbers:
-        char += digits
-    if specialChars:
-        char += special
+    for i in range(int(length) - 4):
+        pw.append(random.choice(chars))
+    random.shuffle(pw)
+    pw = "".join(pw)
+    outputFrame = tk.LabelFrame(frame,text="",bd=0)
+    outputFrame.grid(row = 1,column = 0,sticky="news", padx=20, pady=20)
+    outputLabel = tk.Label(outputFrame, text=f'You password is = {pw}', font=('Helvetica', 10), padx=20)
+    outputLabel.grid(row = 0,column = 0)
+    genPwdButton.grid_remove()
+    copyButton = Button(buttonFrame,text='Copy Password',bd='4',font=('Helvetica',10), command=lambda: (copyPass(pw)))
+    copyButton.grid(row=0,column=0,ipadx=5,ipady=5,padx=10,pady=10)
+    closeButton = Button(buttonFrame,text='Close',bd='4',font=('Helvetica',10), command=window.destroy)
+    closeButton.grid(row=1,column=0,ipadx=5,ipady=5,padx=10,pady=10)
 
-    pwd = ''
-    meetsCriteria = False
-    hasNumber = False
-    hasSpecial = False
-
-    while not meetsCriteria or len(pwd) < pwdLength:
-        newChar = random.choice(char)
-        pwd += newChar
-
-        if newChar in digits:
-            hasNumber = True
-        elif newChar in special:
-            hasSpecial = True
-
-        meetsCriteria = True
-        if numbers:
-            meetsCriteria = hasNumber
-        if specialChars:
-            meetsCriteria = meetsCriteria and hasSpecial
-    print(pwd)
-    return pwd
-    
+def copyPass(password):     #copy text to clipboard
+    pc.copy(password)
 
 # Create the main window
 window = tk.Tk()
@@ -74,15 +71,15 @@ includeSpecialCheck = tk.Checkbutton(inputFrame, text="", onvalue=True, offvalue
 includeSpecialCheck.grid(row = 3,column = 1)
 
 # create output frame
-outputFrame = tk.LabelFrame(frame,text="",bd=0)
-outputFrame.grid(row = 1,column = 0,sticky="news", padx=20, pady=20)
-outputLabel = tk.Label(outputFrame, text=f'You password is = {password}', font=('Helvetica', 10), padx=20)
-outputLabel.grid(row = 0,column = 0)
+# outputFrame = tk.LabelFrame(frame,text="",bd=0)
+# outputFrame.grid(row = 1,column = 0,sticky="news", padx=20, pady=20)
+# outputLabel = tk.Label(outputFrame, text=f'You password is = {pw}', font=('Helvetica', 10), padx=20)
+# outputLabel.grid(row = 0,column = 0)
 
 # create the button frame
 buttonFrame = tk.LabelFrame(frame,borderwidth = 1, bd='0')
 buttonFrame.grid(row=2,column=0,padx=10,pady=10)
-genPwdButton = Button(buttonFrame,text='Generate Password',bd='4',font=('Helvetica',10), command=generatePassword)
+genPwdButton = Button(buttonFrame,text='Generate Password',bd='4',font=('Helvetica',10), command=lambda: genPass(pwdLengthSpin.get(), includeNumbers.get(), includeSpecialChars.get() ))
 genPwdButton.grid(row=0,column=0,ipadx=5,ipady=5,padx=10,pady=10)
 
 for widget in inputFrame.winfo_children():
